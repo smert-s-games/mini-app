@@ -1,37 +1,53 @@
-const tg = window.Telegram.WebApp;
-tg.ready();
-tg.expand();
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Топ Слоты Winarya</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { background: #0a0c1b; color: white; font-family: system-ui; margin: 0; }
+        .header { padding: 20px; text-align: center; background: #1a1e33; }
+        .slot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; padding: 15px; }
+        .slot-card { background: #1a1e33; border-radius: 12px; overflow: hidden; }
+        button { background: #ff007a; width: 100%; padding: 12px; border: none; color: white; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔥 Топ Слоты Winarya</h1>
+        <p>Выбирай и забирай бонус WINARYA</p>
+    </div>
+    <div class="slot-grid" id="slotGrid"></div>
 
-const slots = [
-  { id: 1, name: "Sugar Rush 1000", rtp: "96.5%", volatility: "High", image: "https://via.placeholder.com/300x200/ffcc00/000?text=Sugar+Rush", link: "https://1win.com?ref=WINARYA" },
-  { id: 2, name: "Gates of Olympus 1000", rtp: "96.5%", volatility: "High", image: "https://via.placeholder.com/300x200/9933ff/fff?text=Gates", link: "https://1win.com?ref=WINARYA" },
-  { id: 3, name: "Starlight Princess 1000", rtp: "96.5%", volatility: "High", image: "https://via.placeholder.com/300x200/00ff9f/000?text=Starlight", link: "https://1win.com?ref=WINARYA" },
-  { id: 4, name: "The Dog House", rtp: "96.51%", volatility: "Medium", image: "https://via.placeholder.com/300x200/ff2d55/fff?text=Dog+House", link: "https://1win.com?ref=WINARYA" },
-  { id: 5, name: "Joker Stoker", rtp: "98.07%", volatility: "High", image: "https://via.placeholder.com/300x200/ffd700/000?text=Joker", link: "https://1win.com?ref=WINARYA" },
-  // Добавь ещё из Winarya
-];
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
 
-function renderSlots() {
-  const grid = document.getElementById('slotGrid');
-  grid.innerHTML = '';
-  slots.forEach(slot => {
-    const card = document.createElement('div');
-    card.className = 'slot-card';
-    card.innerHTML = `
-      <img src="${slot.image}" alt="${slot.name}">
-      <div class="slot-info">
-        <div class="slot-name">${slot.name}</div>
-        <div class="slot-rtp">RTP: ${slot.rtp}</div>
-        <button onclick="playSlot(${slot.id})">Играть с бонусом WINARYA</button>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
-}
+        const slots = [
+            {id:1, name:"Sugar Rush 1000", rtp:"96.5%", link:"https://1win.com?ref=WINARYA"},
+            {id:2, name:"Gates of Olympus 1000", rtp:"96.5%", link:"https://1win.com?ref=WINARYA"},
+            {id:3, name:"Starlight Princess 1000", rtp:"96.5%", link:"https://1win.com?ref=WINARYA"},
+            {id:4, name:"The Dog House", rtp:"96.51%", link:"https://1win.com?ref=WINARYA"},
+            {id:5, name:"Joker Stoker", rtp:"98.07%", link:"https://1win.com?ref=WINARYA"},
+            // больше из Winarya
+        ];
 
-function playSlot(id) {
-  const slot = slots.find(s => s.id === id);
-  if (slot) tg.openLink(slot.link);
-}
+        function renderSlots() {
+            const grid = document.getElementById('slotGrid');
+            grid.innerHTML = slots.map(s => `
+                <div class="slot-card">
+                    <div style="padding:15px">
+                        <h3>${s.name}</h3>
+                        <p>RTP: ${s.rtp}</p>
+                        <button onclick="tg.openLink('${s.link}')">Играть</button>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-renderSlots();
+        renderSlots();
+    </script>
+</body>
+</html>
