@@ -2,29 +2,180 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Топ Слоты Winarya</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Winarya — Топ Слоты</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { background: #0a0c1b; color: white; font-family: system-ui; margin: 0; }
-        .header { padding: 20px; text-align: center; background: #1a1e33; }
-        .slot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; padding: 15px; }
-        .slot-card { background: #1a1e33; border-radius: 12px; overflow: hidden; }
-        img { width: 100%; height: 160px; object-fit: cover; }
-        button { background: #ff007a; width: 100%; padding: 12px; border: none; color: white; }
+        :root {
+            --primary: #03a9f4;
+            --neon-pink: #ff007a;
+            --neon-green: #00ff9f;
+            --dark-900: #0a0c1b;
+            --dark-800: #1a1e33;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--dark-900);
+            color: white;
+            font-family: system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+        }
+        .header {
+            background: rgba(26, 30, 51, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 16px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-green), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle { color: #9ca3af; font-size: 0.95rem; margin-top: 4px; }
+
+        /* Promo block */
+        .promo {
+            margin: 16px;
+            background: var(--dark-800);
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .promo::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,0,122,0.1), transparent, rgba(0,255,159,0.1));
+            pointer-events: none;
+        }
+        .promo-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
+        .promo-code {
+            border: 1px solid var(--neon-green);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            margin: 12px 0;
+            background: rgba(10,12,27,0.5);
+        }
+        .promo-code .bonus { color: var(--neon-green); font-weight: 600; }
+        .promo-code .code {
+            color: var(--neon-pink);
+            font-size: 1.75rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin: 6px 0;
+        }
+        .btn-neon {
+            background: linear-gradient(135deg, var(--neon-pink), var(--primary));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 700;
+            padding: 12px 20px;
+            width: 100%;
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(255,0,122,0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-neon:active { transform: scale(0.98); }
+
+        /* Grid */
+        .section-title {
+            text-align: center;
+            padding: 20px 16px 8px;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        .slot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 14px;
+            padding: 12px 16px 32px;
+        }
+        .slot-card {
+            background: rgba(26, 30, 51, 0.95);
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #2a2e45;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+        .slot-card:active {
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(0,255,159,0.15);
+        }
+        .slot-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            display: block;
+            background: #111;
+        }
+        .slot-info { padding: 12px; }
+        .slot-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .slot-rtp {
+            color: var(--neon-green);
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+        .slot-btn {
+            background: linear-gradient(135deg, var(--neon-pink), var(--primary));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>🔥 Топ Слоты Winarya</h1>
-        <p>Выбирай и забирай бонус WINARYA</p>
+        <div class="logo">Winarya</div>
+        <div class="subtitle">Топ слоты · бонусы · стратегии</div>
     </div>
+
+    <div class="promo">
+        <div class="promo-title">1WIN — Official Mirror</div>
+        <p style="color:#d1d5db; font-size:0.9rem; margin-bottom:8px;">
+            Промокод <b>WINARYA</b> при регистрации → 500% на первый депозит
+        </p>
+        <div class="promo-code">
+            <div class="bonus">500% Bonus</div>
+            <div class="code">WINARYA</div>
+            <button class="btn-neon" onclick="copyPromo()">Скопировать промокод</button>
+        </div>
+        <button class="btn-neon" style="margin-top:10px;" onclick="tg.openLink('https://1win.com?ref=WINARYA')">
+            Перейти на 1WIN →
+        </button>
+    </div>
+
+    <div class="section-title">Все доступные слоты</div>
     <div class="slot-grid" id="slotGrid"></div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.ready();
         tg.expand();
+        tg.setHeaderColor('#0a0c1b');
+        tg.setBackgroundColor('#0a0c1b');
 
         const slots = [
             {id:1, name:"Sugar Rush 1000", rtp:"96.5%", image:"images/optimized/sugar_rush_1000_thumb.webp", link:"https://1win.com?ref=WINARYA"},
@@ -34,21 +185,31 @@
             {id:5, name:"Joker Stoker", rtp:"98.07%", image:"images/optimized/joker_stoker_thumb.webp", link:"https://1win.com?ref=WINARYA"},
             {id:6, name:"Fruit Party", rtp:"96.47%", image:"images/optimized/fruit_party_thumb.webp", link:"https://1win.com?ref=WINARYA"},
             {id:7, name:"Gold Party", rtp:"96.50%", image:"images/optimized/gold_party_thumb.webp", link:"https://1win.com?ref=WINARYA"},
-            {id:8, name:"Coin Strike", rtp:"96.5%", image:"images/optimized/coin_strike_thumb.webp", link:"https://1win.com?ref=WINARYA"}
+            {id:8, name:"Coin Strike", rtp:"96.5%", image:"images/optimized/coin_strike_thumb.webp", link:"https://1win.com?ref=WINARYA"},
+            {id:9, name:"Big Bass Bonanza", rtp:"96.5%", image:"images/optimized/big_bass_bonanza_megaways_thumb.webp", link:"https://1win.com?ref=WINARYA"}
         ];
 
         function renderSlots() {
             const grid = document.getElementById('slotGrid');
             grid.innerHTML = slots.map(s => `
                 <div class="slot-card">
-                    <img src="${s.image}" alt="${s.name}">
-                    <div style="padding:15px">
-                        <h3>${s.name}</h3>
-                        <p>RTP: ${s.rtp}</p>
-                        <button onclick="tg.openLink('${s.link}')">Играть с бонусом</button>
+                    <img src="${s.image}" alt="${s.name}" onerror="this.src='https://via.placeholder.com/300x200/1a1e33/fff?text=${encodeURIComponent(s.name)}'">
+                    <div class="slot-info">
+                        <div class="slot-name">${s.name}</div>
+                        <div class="slot-rtp">RTP: ${s.rtp}</div>
+                        <button class="slot-btn" onclick="tg.openLink('${s.link}')">Играть</button>
                     </div>
                 </div>
             `).join('');
+        }
+
+        function copyPromo() {
+            navigator.clipboard.writeText('WINARYA').then(() => {
+                const btn = event.target;
+                const old = btn.textContent;
+                btn.textContent = '✅ Скопировано';
+                setTimeout(() => btn.textContent = old, 1500);
+            }).catch(() => alert('WINARYA'));
         }
 
         renderSlots();
