@@ -162,7 +162,7 @@
             <div class="code">WINARYA</div>
             <button class="btn-neon" onclick="copyPromo()">Скопировать промокод</button>
         </div>
-        <button class="btn-neon" style="margin-top:10px;" onclick="tg.openLink('https://1win.com?ref=WINARYA')">
+        <button class="btn-neon" style="margin-top:10px;" onclick="tg.openLink('https://lkeh.pro/bac410a4')">
             Перейти на 1WIN →
         </button>
     </div>
@@ -177,16 +177,18 @@
         tg.setHeaderColor('#0a0c1b');
         tg.setBackgroundColor('#0a0c1b');
 
+        const AFF_LINK = 'https://lkeh.pro/bac410a4';
+
         const slots = [
-            {id:1, name:"Sugar Rush 1000", rtp:"96.5%", image:"images/optimized/sugar_rush_1000_thumb.webp", link:"https://1win.com?ref=WINARYA"},
-            {id:2, name:"Gates of Olympus 1000", rtp:"96.5%", image:"images/optimized/gates_of_olympus_thumb.webp", link:"https://1win.com?ref=WINARYA"},
-            {id:3, name:"Starlight Princess 1000", rtp:"96.5%", image:"images/optimized/starlight_princess_1000_thumb.webp", link:"https://1win.com?ref=WINARYA"},
-            {id:4, name:"The Dog House", rtp:"96.51%", image:"images/optimized/the_dogs_house_thumb.webp", link:"https://1win.com?ref=WINARYA"},
-            {id:5, name:"Joker Stoker", rtp:"98.07%", image:"images/optimized/joker_stoker_thumb.webp", link:"https://1win.com?ref=WINARYA"},
-            {id:6, name:"Fruit Party", rtp:"96.47%", image:"images/optimized/fruit_party_thumb.webp", link:"https://1win.com?ref=WINARYA"},
-            {id:7, name:"Gold Party", rtp:"96.50%", image:"images/optimized/gold_party_thumb.webp", link:"https://1win.com?ref=WINARYA"},
-            {id:8, name:"Coin Strike", rtp:"96.5%", image:"images/optimized/coin_strike_thumb.webp", link:"https://1win.com?ref=WINARYA"},
-            {id:9, name:"Big Bass Bonanza", rtp:"96.5%", image:"images/optimized/big_bass_bonanza_megaways_thumb.webp", link:"https://1win.com?ref=WINARYA"}
+            {id:1, name:"Sugar Rush 1000", rtp:"96.5%", image:"images/optimized/sugar_rush_1000_thumb.webp"},
+            {id:2, name:"Gates of Olympus 1000", rtp:"96.5%", image:"images/optimized/gates_of_olympus_thumb.webp"},
+            {id:3, name:"Starlight Princess 1000", rtp:"96.5%", image:"images/optimized/starlight_princess_1000_thumb.webp"},
+            {id:4, name:"The Dog House", rtp:"96.51%", image:"images/optimized/the_dogs_house_thumb.webp"},
+            {id:5, name:"Joker Stoker", rtp:"98.07%", image:"images/optimized/joker_stoker_thumb.webp"},
+            {id:6, name:"Fruit Party", rtp:"96.47%", image:"images/optimized/fruit_party_thumb.webp"},
+            {id:7, name:"Gold Party", rtp:"96.50%", image:"images/optimized/gold_party_thumb.webp"},
+            {id:8, name:"Coin Strike", rtp:"96.5%", image:"images/optimized/coin_strike_thumb.webp"},
+            {id:9, name:"Big Bass Bonanza", rtp:"96.5%", image:"images/optimized/big_bass_bonanza_megaways_thumb.webp"}
         ];
 
         function renderSlots() {
@@ -197,7 +199,7 @@
                     <div class="slot-info">
                         <div class="slot-name">${s.name}</div>
                         <div class="slot-rtp">RTP: ${s.rtp}</div>
-                        <button class="slot-btn" onclick="tg.openLink('${s.link}')">Играть</button>
+                        <button class="slot-btn" onclick="tg.openLink('${AFF_LINK}')">Играть</button>
                     </div>
                 </div>
             `).join('');
