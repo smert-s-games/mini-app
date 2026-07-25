@@ -2,29 +2,56 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Топ Слоты</title>
-    <script src="https://telegram.org/js/telegram-web-app.js?63"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Топ Слоты Winarya</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; background: #1c1c1e; color: white; }
-        .header { background: #2c2c2e; padding: 15px; text-align: center; }
-        .slot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 15px; }
-        .slot-card { background: #2c2c2e; border-radius: 12px; overflow: hidden; cursor: pointer; transition: transform 0.2s; }
-        .slot-card:hover { transform: scale(1.05); }
-        .slot-card img { width: 100%; height: 140px; object-fit: cover; }
-        .slot-info { padding: 10px; }
-        .slot-name { font-weight: bold; }
-        .slot-rtp { color: #4ade80; }
-        button { background: #ff2d55; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-size: 16px; }
+        body { background: #0a0c1b; color: white; font-family: system-ui; margin: 0; }
+        .header { padding: 20px; text-align: center; background: #1a1e33; }
+        .slot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; padding: 15px; }
+        .slot-card { background: #1a1e33; border-radius: 12px; overflow: hidden; }
+        img { width: 100%; height: 160px; object-fit: cover; }
+        button { background: #ff007a; width: 100%; padding: 12px; border: none; color: white; }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>🔥 Топ Слоты для Заносов</h1>
-        <p>Выбирай и забирай бонус</p>
+        <h1>🔥 Топ Слоты Winarya</h1>
+        <p>Выбирай и забирай бонус WINARYA</p>
     </div>
     <div class="slot-grid" id="slotGrid"></div>
 
-    <script src="app.js"></script>
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+
+        const slots = [
+            {id:1, name:"Sugar Rush 1000", rtp:"96.5%", image:"images/optimized/sugar_rush_1000_thumb.webp", link:"https://1win.com?ref=WINARYA"},
+            {id:2, name:"Gates of Olympus 1000", rtp:"96.5%", image:"images/optimized/gates_of_olympus_thumb.webp", link:"https://1win.com?ref=WINARYA"},
+            {id:3, name:"Starlight Princess 1000", rtp:"96.5%", image:"images/optimized/starlight_princess_1000_thumb.webp", link:"https://1win.com?ref=WINARYA"},
+            {id:4, name:"The Dog House", rtp:"96.51%", image:"images/optimized/the_dogs_house_thumb.webp", link:"https://1win.com?ref=WINARYA"},
+            {id:5, name:"Joker Stoker", rtp:"98.07%", image:"images/optimized/joker_stoker_thumb.webp", link:"https://1win.com?ref=WINARYA"},
+            {id:6, name:"Fruit Party", rtp:"96.47%", image:"images/optimized/fruit_party_thumb.webp", link:"https://1win.com?ref=WINARYA"},
+            {id:7, name:"Gold Party", rtp:"96.50%", image:"images/optimized/gold_party_thumb.webp", link:"https://1win.com?ref=WINARYA"},
+            {id:8, name:"Coin Strike", rtp:"96.5%", image:"images/optimized/coin_strike_thumb.webp", link:"https://1win.com?ref=WINARYA"}
+        ];
+
+        function renderSlots() {
+            const grid = document.getElementById('slotGrid');
+            grid.innerHTML = slots.map(s => `
+                <div class="slot-card">
+                    <img src="${s.image}" alt="${s.name}">
+                    <div style="padding:15px">
+                        <h3>${s.name}</h3>
+                        <p>RTP: ${s.rtp}</p>
+                        <button onclick="tg.openLink('${s.link}')">Играть с бонусом</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        renderSlots();
+    </script>
 </body>
 </html>
