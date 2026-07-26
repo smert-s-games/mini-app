@@ -114,21 +114,29 @@
             font-size: 14px;
             font-weight: 600;
             color: #94a3b8;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             letter-spacing: 0.4px;
         }
 
         .promo-highlight {
-            display: inline-block;
-            font-size: 22px;
+            display: block;
+            font-size: 24px;
             font-weight: 900;
             letter-spacing: 0.5px;
             background: linear-gradient(135deg, #00e5a0 0%, #5eead4 40%, #34d399 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            filter: drop-shadow(0 0 12px rgba(0, 229, 160, 0.45));
+            filter: drop-shadow(0 0 14px rgba(0, 229, 160, 0.5));
+            margin-bottom: 4px;
+        }
+
+        .promo-sub {
+            font-size: 14px;
+            font-weight: 600;
+            color: #94a3b8;
             margin-bottom: 12px;
+            letter-spacing: 0.4px;
         }
 
         .promo-code-row {
@@ -271,8 +279,10 @@
             letter-spacing: 0.2px;
             color: #fff;
             text-shadow:
-                0 0 8px rgba(0, 229, 160, 0.35),
-                0 2px 4px rgba(0,0,0,0.85);
+                0 0 6px rgba(0, 229, 160, 0.7),
+                0 0 14px rgba(0, 229, 160, 0.45),
+                0 0 24px rgba(0, 229, 160, 0.25),
+                0 2px 4px rgba(0,0,0,0.9);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -326,6 +336,7 @@
         <div class="promo">
             <div class="promo-label">Промокод на</div>
             <div class="promo-highlight">600% бонус</div>
+            <div class="promo-sub">на первое пополнение</div>
             <div class="promo-code-row">
                 <div class="promo-code">WINARYA</div>
                 <button class="copy-btn" onclick="copyPromo()">Копировать</button>
