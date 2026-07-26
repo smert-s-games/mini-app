@@ -334,7 +334,7 @@
 
         <div class="promo">
             <div class="promo-label">Промокод на</div>
-            <div class="promo-highlight">500% бонус</div>
+            <div class="promo-highlight">600% бонус</div>
             <div class="promo-sub">на первое пополнение</div>
             <div class="promo-code-row">
                 <div class="promo-code">WINARYA</div>
@@ -342,14 +342,14 @@
             </div>
         </div>
 
-        <button class="main-cta" onclick="openCasino()">
+        <button class="main-cta" onclick="openLink('https://lkeh.pro/bac410a4')">
             Перейти на сайт →
         </button>
 
         <div class="section-label">Популярные игры</div>
         <div class="games">
 
-            <button class="game-btn" onclick="openCasino()">
+            <button class="game-btn" onclick="openLink('https://one-vv5693.com/casino/play/v_pragmatic:sugarrush1000?p=qq3s')">
                 <div class="game-bg" style="background-image: url('images/sugar_rush_1000_thumb.png')"></div>
                 <div class="game-content">
                     <div class="game-logo-wrap">
@@ -360,7 +360,7 @@
                 </div>
             </button>
 
-            <button class="game-btn" onclick="openCasino()">
+            <button class="game-btn" onclick="openLink('https://one-vv5693.com/casino/play/v_pragmatic:gatesofolympus?p=qq3s')">
                 <div class="game-bg" style="background-image: url('images/gates_of_olympus_thumb.png')"></div>
                 <div class="game-content">
                     <div class="game-logo-wrap">
@@ -371,7 +371,7 @@
                 </div>
             </button>
 
-            <button class="game-btn" onclick="openCasino()">
+            <button class="game-btn" onclick="openLink('https://one-vv5693.com/casino/play/v_pragmatic:starlightprincess?p=qq3s')">
                 <div class="game-bg" style="background-image: url('images/starlight_princess_1000_thumb.png')"></div>
                 <div class="game-content">
                     <div class="game-logo-wrap">
@@ -382,7 +382,7 @@
                 </div>
             </button>
 
-            <button class="game-btn" onclick="openCasino()">
+            <button class="game-btn" onclick="openLink('https://one-vv5693.com/casino/play/v_pragmatic:thedoghouse?p=qq3s')">
                 <div class="game-bg" style="background-image: url('images/the_dogs_house_thumb.png')"></div>
                 <div class="game-content">
                     <div class="game-logo-wrap">
@@ -407,8 +407,6 @@
         tg.setHeaderColor('#0b0f1a');
         tg.setBackgroundColor('#0b0f1a');
 
-        const AFF_LINK = 'https://lkeh.pro/bac410a4';
-
         function getDailyNumber() {
             const today = new Date();
             const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
@@ -420,8 +418,8 @@
 
         document.getElementById('socialNumber').textContent = getDailyNumber();
 
-        function openCasino() {
-            tg.openLink(AFF_LINK);
+        function openLink(url) {
+            tg.openLink(url);
         }
 
         function copyPromo() {
