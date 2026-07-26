@@ -330,7 +330,7 @@
         </div>
 
         <div class="social-proof">
-            <strong>2 847</strong> человек уже забрали бонус сегодня
+            <strong id="socialNumber">2 847</strong> человек уже забрали бонус сегодня
         </div>
 
         <div class="promo">
@@ -409,6 +409,19 @@
         tg.setBackgroundColor('#0b0f1a');
 
         const AFF_LINK = 'https://lkeh.pro/bac410a4';
+
+        // Daily social proof number (1000–5000), stable within the same day
+        function getDailyNumber() {
+            const today = new Date();
+            const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+            // Simple deterministic pseudo-random from seed
+            const x = Math.sin(seed * 9999) * 10000;
+            const rand = x - Math.floor(x);
+            const num = Math.floor(1000 + rand * 4001); // 1000..5000
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        }
+
+        document.getElementById('socialNumber').textContent = getDailyNumber();
 
         function openCasino() {
             tg.openLink(AFF_LINK);
