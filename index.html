@@ -3,242 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Winarya — Топ Слоты</title>
+    <title>1WIN — Официальное зеркало</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --primary: #03a9f4;
-            --neon-pink: #ff007a;
-            --neon-green: #00ff9f;
-            --dark-900: #0a0c1b;
-            --dark-800: #1a1e33;
+            --bg: #0b0f1a;
+            --card: #151b2d;
+            --accent: #00e5a0;
+            --accent-2: #3b82f6;
+            --text: #ffffff;
+            --muted: #94a3b8;
+            --danger: #ff4d6d;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
-            background: linear-gradient(135deg, 
-                #ff0000, #ff7f00, #ffff00, #00ff00, 
-                #0000ff, #4b0082, #9400d3, #ff1493);
-            background-size: 400% 400%;
-            animation: rainbow 12s ease infinite;
-            color: white;
-            font-family: system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px 16px 40px;
+            line-height: 1.4;
         }
-        @keyframes rainbow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
         }
+
+        /* Header */
         .header {
-            background: rgba(26, 30, 51, 0.85);
-            backdrop-filter: blur(15px);
-            padding: 16px;
             text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.15);
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-green), var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .subtitle { color: #e5e7eb; font-size: 0.95rem; margin-top: 4px; }
-        .monkey {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 12px auto 0;
-            display: block;
-            border: 3px solid #fff;
-            box-shadow: 0 0 20px rgba(255,255,255,0.4);
+            margin-bottom: 28px;
         }
 
-        /* Promo block */
-        .promo {
-            margin: 16px;
-            background: rgba(26, 30, 51, 0.9);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 16px;
-            padding: 20px;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-        .promo::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,0,122,0.15), transparent, rgba(0,255,159,0.15));
-            pointer-events: none;
-        }
-        .promo-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
-        .promo-code {
-            border: 1px solid var(--neon-green);
-            border-radius: 12px;
-            padding: 12px;
-            text-align: center;
-            margin: 12px 0;
-            background: rgba(10,12,27,0.6);
-        }
-        .promo-code .bonus { color: var(--neon-green); font-weight: 600; }
-        .promo-code .code {
-            color: var(--neon-pink);
-            font-size: 1.75rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            margin: 6px 0;
-        }
-        .btn-neon {
-            background: linear-gradient(135deg, var(--neon-pink), var(--primary));
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-weight: 700;
-            padding: 12px 20px;
-            width: 100%;
-            cursor: pointer;
-            box-shadow: 0 0 12px rgba(255,0,122,0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .btn-neon:active { transform: scale(0.98); }
-
-        /* Grid */
-        .section-title {
-            text-align: center;
-            padding: 20px 16px 8px;
-            font-size: 1.4rem;
-            font-weight: 700;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-        }
-        .slot-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 14px;
-            padding: 12px 16px 32px;
-        }
-        .slot-card {
-            background: rgba(26, 30, 51, 0.92);
-            border-radius: 14px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.15);
-            transition: transform 0.25s, box-shadow 0.25s;
-            backdrop-filter: blur(8px);
-        }
-        .slot-card:active {
-            transform: scale(1.02);
-            box-shadow: 0 8px 24px rgba(0,255,159,0.25);
-        }
-        .slot-card img {
-            width: 100%;
-            height: 140px;
-            object-fit: cover;
-            display: block;
-            background: #111;
-        }
-        .slot-info { padding: 12px; }
-        .slot-name {
-            font-weight: 700;
-            font-size: 0.95rem;
-            margin-bottom: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .slot-rtp {
-            color: var(--neon-green);
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-        }
-        .slot-btn {
-            background: linear-gradient(135deg, var(--neon-pink), var(--primary));
-            border: none;
-            border-radius: 8px;
-            color: white;
+        .badge {
+            display: inline-block;
+            background: rgba(0, 229, 160, 0.12);
+            color: var(--accent);
+            font-size: 12px;
             font-weight: 600;
-            font-size: 0.85rem;
-            padding: 10px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(0, 229, 160, 0.25);
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 15px;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        /* Main CTA */
+        .main-cta {
             width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, #00e5a0, #00b37a);
+            color: #04120c;
+            font-size: 17px;
+            font-weight: 700;
+            border: none;
+            border-radius: 14px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 8px 24px rgba(0, 229, 160, 0.25);
+            transition: transform 0.15s, box-shadow 0.15s;
+            margin-bottom: 28px;
+        }
+
+        .main-cta:active {
+            transform: scale(0.97);
+            box-shadow: 0 4px 12px rgba(0, 229, 160, 0.2);
+        }
+
+        /* Trust text */
+        .trust {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 18px 16px;
+            margin-bottom: 28px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .trust p {
+            color: var(--muted);
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .trust strong {
+            color: var(--text);
+        }
+
+        /* Games section */
+        .section-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 12px;
+            padding-left: 4px;
+        }
+
+        .games {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .game-btn {
+            width: 100%;
+            height: 52px; /* roughly 1:3 ratio when full width */
+            background: var(--card);
+            color: var(--text);
+            font-size: 15px;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 18px;
+            transition: background 0.15s, border-color 0.15s;
+        }
+
+        .game-btn:active {
+            background: #1c2438;
+            border-color: rgba(0, 229, 160, 0.3);
+        }
+
+        .game-btn span.arrow {
+            color: var(--accent);
+            font-size: 18px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 36px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--muted);
+            opacity: 0.7;
+        }
+
+        /* Desktop fine-tuning */
+        @media (min-width: 480px) {
+            .container {
+                max-width: 440px;
+            }
+            .title {
+                font-size: 28px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="logo">Winarya</div>
-        <div class="subtitle">Топ слоты · бонусы · стратегии</div>
-        <img class="monkey" src="https://cdn-icons-png.flaticon.com/512/616/616430.png" alt="Обезьяна" 
-             onerror="this.src='https://via.placeholder.com/90x90/ffcc00/000?text=🐵'">
-    </div>
-
-    <div class="promo">
-        <div class="promo-title">1WIN — Official Mirror</div>
-        <p style="color:#d1d5db; font-size:0.9rem; margin-bottom:8px;">
-            Промокод <b>WINARYA</b> при регистрации → 500% на первый депозит
-        </p>
-        <div class="promo-code">
-            <div class="bonus">500% Bonus</div>
-            <div class="code">WINARYA</div>
-            <button class="btn-neon" onclick="copyPromo()">Скопировать промокод</button>
+    <div class="container">
+        <div class="header">
+            <div class="badge">ОФИЦИАЛЬНОЕ ЗЕРКАЛО</div>
+            <h1 class="title">1WIN</h1>
+            <p class="subtitle">Быстрый и безопасный вход на рабочее зеркало</p>
         </div>
-        <button class="btn-neon" style="margin-top:10px;" onclick="tg.openLink('https://lkeh.pro/bac410a4')">
-            Перейти на 1WIN →
-        </button>
-    </div>
 
-    <div class="section-title">Все доступные слоты</div>
-    <div class="slot-grid" id="slotGrid"></div>
+        <button class="main-cta" onclick="openCasino()">
+            Перейти на сайт →
+        </button>
+
+        <div class="trust">
+            <p>
+                Это <strong>официальное зеркало</strong> 1WIN. <br>
+                Сайт работает стабильно, бонусы и депозиты доступны в обычном режиме.
+            </p>
+        </div>
+
+        <div class="section-label">Популярные игры</div>
+        <div class="games" id="games">
+            <!-- Кнопки игр будут добавлены позже по твоему списку -->
+            <button class="game-btn" onclick="openCasino()">
+                <span>Sugar Rush 1000</span>
+                <span class="arrow">→</span>
+            </button>
+            <button class="game-btn" onclick="openCasino()">
+                <span>Gates of Olympus</span>
+                <span class="arrow">→</span>
+            </button>
+            <button class="game-btn" onclick="openCasino()">
+                <span>Starlight Princess</span>
+                <span class="arrow">→</span>
+            </button>
+            <button class="game-btn" onclick="openCasino()">
+                <span>The Dog House</span>
+                <span class="arrow">→</span>
+            </button>
+        </div>
+
+        <div class="footer">
+            18+ · Играйте ответственно
+        </div>
+    </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.ready();
         tg.expand();
-        tg.setHeaderColor('#0a0c1b');
-        tg.setBackgroundColor('#0a0c1b');
+        tg.setHeaderColor('#0b0f1a');
+        tg.setBackgroundColor('#0b0f1a');
 
         const AFF_LINK = 'https://lkeh.pro/bac410a4';
 
-        const slots = [
-            {id:1, name:"Sugar Rush 1000", rtp:"96.5%", image:"images/optimized/sugar_rush_1000_thumb.webp"},
-            {id:2, name:"Gates of Olympus 1000", rtp:"96.5%", image:"images/optimized/gates_of_olympus_thumb.webp"},
-            {id:3, name:"Starlight Princess 1000", rtp:"96.5%", image:"images/optimized/starlight_princess_1000_thumb.webp"},
-            {id:4, name:"The Dog House", rtp:"96.51%", image:"images/optimized/the_dogs_house_thumb.webp"},
-            {id:5, name:"Joker Stoker", rtp:"98.07%", image:"images/optimized/joker_stoker_thumb.webp"},
-            {id:6, name:"Fruit Party", rtp:"96.47%", image:"images/optimized/fruit_party_thumb.webp"},
-            {id:7, name:"Gold Party", rtp:"96.50%", image:"images/optimized/gold_party_thumb.webp"},
-            {id:8, name:"Coin Strike", rtp:"96.5%", image:"images/optimized/coin_strike_thumb.webp"},
-            {id:9, name:"Big Bass Bonanza", rtp:"96.5%", image:"images/optimized/big_bass_bonanza_megaways_thumb.webp"}
-        ];
-
-        function renderSlots() {
-            const grid = document.getElementById('slotGrid');
-            grid.innerHTML = slots.map(s => `
-                <div class="slot-card">
-                    <img src="${s.image}" alt="${s.name}" onerror="this.src='https://via.placeholder.com/300x200/1a1e33/fff?text=${encodeURIComponent(s.name)}'">
-                    <div class="slot-info">
-                        <div class="slot-name">${s.name}</div>
-                        <div class="slot-rtp">RTP: ${s.rtp}</div>
-                        <button class="slot-btn" onclick="tg.openLink('${AFF_LINK}')">Играть</button>
-                    </div>
-                </div>
-            `).join('');
+        function openCasino() {
+            tg.openLink(AFF_LINK);
         }
-
-        function copyPromo() {
-            navigator.clipboard.writeText('WINARYA').then(() => {
-                const btn = event.target;
-                const old = btn.textContent;
-                btn.textContent = '✅ Скопировано';
-                setTimeout(() => btn.textContent = old, 1500);
-            }).catch(() => alert('WINARYA'));
-        }
-
-        renderSlots();
     </script>
 </body>
 </html>
