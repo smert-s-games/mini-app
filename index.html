@@ -23,7 +23,7 @@
         }
 
         body {
-            background: var(--bg);
+            background: var(--bg) url('images/fon.png') center/cover no-repeat fixed;
             color: var(--text);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             min-height: 100vh;
@@ -32,6 +32,15 @@
             align-items: center;
             padding: 24px 16px 40px;
             line-height: 1.4;
+        }
+
+        /* dark overlay for readability */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(11, 15, 26, 0.78);
+            z-index: -1;
         }
 
         .container {
@@ -99,12 +108,13 @@
 
         /* Promo block */
         .promo {
-            background: var(--card);
+            background: rgba(21, 27, 45, 0.92);
             border: 1px solid rgba(255,255,255,0.07);
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 18px;
             text-align: center;
+            backdrop-filter: blur(8px);
         }
 
         .promo-label {
@@ -191,7 +201,7 @@
         .game-btn {
             width: 100%;
             height: 56px;
-            background: var(--card);
+            background: rgba(21, 27, 45, 0.92);
             color: var(--text);
             font-size: 15px;
             font-weight: 600;
@@ -203,6 +213,7 @@
             padding: 0 14px;
             gap: 12px;
             transition: background 0.15s, border-color 0.15s;
+            backdrop-filter: blur(8px);
         }
 
         .game-btn:active {
@@ -279,22 +290,22 @@
         <div class="section-label">Популярные игры</div>
         <div class="games" id="games">
             <button class="game-btn" onclick="openCasino()">
-                <img class="game-thumb" src="images/optimized/sugar_rush_1000_thumb.webp" alt="" onerror="this.src='https://via.placeholder.com/40x40/151b2d/00e5a0?text=S'">
+                <img class="game-thumb" src="images/sugar_rush_1000_thumb.png" alt="Sugar Rush">
                 <span class="game-name">Sugar Rush 1000</span>
                 <span class="game-arrow">→</span>
             </button>
             <button class="game-btn" onclick="openCasino()">
-                <img class="game-thumb" src="images/optimized/gates_of_olympus_thumb.webp" alt="" onerror="this.src='https://via.placeholder.com/40x40/151b2d/00e5a0?text=G'">
+                <img class="game-thumb" src="images/gates_of_olympus_thumb.png" alt="Gates of Olympus">
                 <span class="game-name">Gates of Olympus</span>
                 <span class="game-arrow">→</span>
             </button>
             <button class="game-btn" onclick="openCasino()">
-                <img class="game-thumb" src="images/optimized/starlight_princess_1000_thumb.webp" alt="" onerror="this.src='https://via.placeholder.com/40x40/151b2d/00e5a0?text=P'">
+                <img class="game-thumb" src="images/starlight_princess_1000_thumb.png" alt="Starlight Princess">
                 <span class="game-name">Starlight Princess</span>
                 <span class="game-arrow">→</span>
             </button>
             <button class="game-btn" onclick="openCasino()">
-                <img class="game-thumb" src="images/optimized/the_dogs_house_thumb.webp" alt="" onerror="this.src='https://via.placeholder.com/40x40/151b2d/00e5a0?text=D'">
+                <img class="game-thumb" src="images/the_dogs_house_thumb.png" alt="The Dog House">
                 <span class="game-name">The Dog House</span>
                 <span class="game-arrow">→</span>
             </button>
