@@ -10,7 +10,6 @@
             --bg: #0b0f1a;
             --card: #151b2d;
             --accent: #00e5a0;
-            --accent-2: #3b82f6;
             --text: #ffffff;
             --muted: #94a3b8;
         }
@@ -34,7 +33,6 @@
             line-height: 1.4;
         }
 
-        /* dark overlay for readability */
         body::before {
             content: '';
             position: fixed;
@@ -48,7 +46,6 @@
             max-width: 420px;
         }
 
-        /* Header */
         .header {
             text-align: center;
             margin-bottom: 22px;
@@ -94,7 +91,6 @@
             font-size: 15px;
         }
 
-        /* Social proof */
         .social-proof {
             text-align: center;
             font-size: 13px;
@@ -106,7 +102,6 @@
             color: var(--accent);
         }
 
-        /* Promo block */
         .promo {
             background: rgba(21, 27, 45, 0.92);
             border: 1px solid rgba(255,255,255,0.07);
@@ -151,13 +146,15 @@
             font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
+            transition: transform 0.15s, background 0.15s;
         }
 
         .copy-btn:active {
+            transform: scale(0.96);
             background: rgba(0, 229, 160, 0.25);
         }
 
-        /* Main CTA */
+        /* Main CTA with pulse */
         .main-cta {
             width: 100%;
             height: 56px;
@@ -173,15 +170,22 @@
             justify-content: center;
             gap: 8px;
             box-shadow: 0 8px 24px rgba(0, 229, 160, 0.25);
-            transition: transform 0.15s, box-shadow 0.15s;
             margin-bottom: 28px;
+            animation: pulse 2.2s ease-in-out infinite;
+            transition: transform 0.15s;
         }
 
         .main-cta:active {
             transform: scale(0.97);
+            animation: none;
         }
 
-        /* Games */
+        @keyframes pulse {
+            0%   { box-shadow: 0 0 0 0 rgba(0, 229, 160, 0.45); }
+            70%  { box-shadow: 0 0 0 14px rgba(0, 229, 160, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 229, 160, 0); }
+        }
+
         .section-label {
             font-size: 13px;
             font-weight: 600;
@@ -198,41 +202,58 @@
             gap: 10px;
         }
 
+        /* Game button: thumb as background, logo as icon */
         .game-btn {
+            position: relative;
             width: 100%;
-            height: 56px;
-            background: rgba(21, 27, 45, 0.92);
-            color: var(--text);
-            font-size: 15px;
-            font-weight: 600;
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
+            height: 64px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            padding: 0 14px;
-            gap: 12px;
-            transition: background 0.15s, border-color 0.15s;
-            backdrop-filter: blur(8px);
+            padding: 0 16px;
+            gap: 14px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.18s ease, border-color 0.18s, box-shadow 0.18s;
+        }
+
+        .game-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(11, 15, 26, 0.72);
+            z-index: 0;
         }
 
         .game-btn:active {
-            background: #1c2438;
-            border-color: rgba(0, 229, 160, 0.3);
+            transform: scale(0.97);
+            border-color: rgba(0, 229, 160, 0.45);
+            box-shadow: 0 0 16px rgba(0, 229, 160, 0.15);
         }
 
-        .game-thumb {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            object-fit: cover;
-            background: #0f1524;
+        .game-btn > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .game-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            object-fit: contain;
+            background: rgba(255,255,255,0.08);
             flex-shrink: 0;
+            padding: 2px;
         }
 
         .game-name {
             flex: 1;
             text-align: left;
+            font-size: 15px;
+            font-weight: 600;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -242,6 +263,11 @@
             color: var(--accent);
             font-size: 18px;
             flex-shrink: 0;
+            transition: transform 0.18s;
+        }
+
+        .game-btn:active .game-arrow {
+            transform: translateX(3px);
         }
 
         .footer {
@@ -289,23 +315,26 @@
 
         <div class="section-label">Популярные игры</div>
         <div class="games" id="games">
-            <button class="game-btn" onclick="openCasino()">
-                <img class="game-thumb" src="images/sugar_rush_1000_thumb.png" alt="Sugar Rush">
+            <button class="game-btn" style="background-image: url('images/sugar_rush_1000_thumb.png')" onclick="openCasino()">
+                <img class="game-logo" src="images/sugar_rush_1000_logo.png" alt="">
                 <span class="game-name">Sugar Rush 1000</span>
                 <span class="game-arrow">→</span>
             </button>
-            <button class="game-btn" onclick="openCasino()">
-                <img class="game-thumb" src="images/gates_of_olympus_thumb.png" alt="Gates of Olympus">
+
+            <button class="game-btn" style="background-image: url('images/gates_of_olympus_thumb.png')" onclick="openCasino()">
+                <img class="game-logo" src="images/gates_of_olympus_logo.png" alt="">
                 <span class="game-name">Gates of Olympus</span>
                 <span class="game-arrow">→</span>
             </button>
-            <button class="game-btn" onclick="openCasino()">
-                <img class="game-thumb" src="images/starlight_princess_1000_thumb.png" alt="Starlight Princess">
+
+            <button class="game-btn" style="background-image: url('images/starlight_princess_1000_thumb.png')" onclick="openCasino()">
+                <img class="game-logo" src="images/starlight_princess_1000_logo.png" alt="">
                 <span class="game-name">Starlight Princess</span>
                 <span class="game-arrow">→</span>
             </button>
-            <button class="game-btn" onclick="openCasino()">
-                <img class="game-thumb" src="images/the_dogs_house_thumb.png" alt="The Dog House">
+
+            <button class="game-btn" style="background-image: url('images/the_dogs_house_thumb.png')" onclick="openCasino()">
+                <img class="game-logo" src="images/the_dogs_house_logo.png" alt="">
                 <span class="game-name">The Dog House</span>
                 <span class="game-arrow">→</span>
             </button>
