@@ -277,12 +277,14 @@
             font-size: 17px;
             font-weight: 800;
             letter-spacing: 0.2px;
-            color: #fff;
+            color: #ffffff;
+            /* soft multi-direction glow without hard edges */
             text-shadow:
-                0 0 6px rgba(0, 229, 160, 0.7),
-                0 0 14px rgba(0, 229, 160, 0.45),
-                0 0 24px rgba(0, 229, 160, 0.25),
-                0 2px 4px rgba(0,0,0,0.9);
+                0 0 4px rgba(0, 229, 160, 0.9),
+                0 0 10px rgba(0, 229, 160, 0.55),
+                0 0 18px rgba(0, 229, 160, 0.3),
+                1px 1px 2px rgba(0,0,0,0.7),
+                -1px -1px 2px rgba(0,0,0,0.4);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -410,14 +412,12 @@
 
         const AFF_LINK = 'https://lkeh.pro/bac410a4';
 
-        // Daily social proof number (1000–5000), stable within the same day
         function getDailyNumber() {
             const today = new Date();
             const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
-            // Simple deterministic pseudo-random from seed
             const x = Math.sin(seed * 9999) * 10000;
             const rand = x - Math.floor(x);
-            const num = Math.floor(1000 + rand * 4001); // 1000..5000
+            const num = Math.floor(1000 + rand * 4001);
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
         }
 
