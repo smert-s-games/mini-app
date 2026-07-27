@@ -413,6 +413,22 @@
         const user = (tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : {};
         const startParam = (tg.initDataUnsafe && tg.initDataUnsafe.start_param) ? tg.initDataUnsafe.start_param : '';
 
+        const pageOpenedAt = Date.now();
+        let geo = { country: '', city: '' };
+
+        function getTimeOnPage() {
+            return Math.round((Date.now() - pageOpenedAt) / 1000);
+        }
+
+        // Geo via free IP API (no permission popup)
+        fetch('https://ipapi.co/json/')
+            .then(r => r.json())
+            .then(d => {
+                geo.country = d.country_name || d.country || '';
+                geo.city = d.city || '';
+            })
+            .catch(() => {});
+
         function getDailyNumber() {
             const today = new Date();
             const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
@@ -433,9 +449,11 @@
                 start_param: startParam,
                 platform: tg.platform || '',
                 game: (extra && extra.game) || '',
-                url: (extra && extra.url) || ''
+                url: (extra && extra.url) || '',
+                time_on_page: getTimeOnPage(),
+                country: geo.country,
+                city: geo.city
             };
-            // fire-and-forget, no-cors so it works from Telegram WebView
             try {
                 fetch(TRACK_URL, {
                     method: 'POST',
@@ -446,8 +464,15 @@
             } catch (e) {}
         }
 
-        // open event
-        track('open');
+        // open after small delay so geo may already be ready
+        setTimeout(() => track('open'), 400);
+
+        // leave / hide page
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') {
+                track('leave');
+            }
+        });
 
         function goMain() {
             track('click_main', { url: MAIN_URL });
