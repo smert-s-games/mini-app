@@ -342,14 +342,14 @@
             </div>
         </div>
 
-        <button class="main-cta" onclick="openLink('https://one-vv5693.com/casino/list?open=register&p=qq3s')">
+        <button class="main-cta" onclick="goMain()">
             Перейти на сайт →
         </button>
 
         <div class="section-label">Популярные игры</div>
         <div class="games">
 
-            <button class="game-btn" onclick="openLink('https://one-vv5693.com/casino/play/v_pragmatic:sugarrush1000?p=qq3s')">
+            <button class="game-btn" onclick="goGame('Sugar Rush 1000', 'https://one-vv5693.com/casino/play/v_pragmatic:sugarrush1000?p=qq3s')">
                 <div class="game-bg" style="background-image: url('images/sugar_rush_1000_thumb.png')"></div>
                 <div class="game-content">
                     <div class="game-logo-wrap">
@@ -360,7 +360,7 @@
                 </div>
             </button>
 
-            <button class="game-btn" onclick="openLink('https://one-vv5693.com/casino/play/v_pragmatic:gatesofolympus?p=qq3s')">
+            <button class="game-btn" onclick="goGame('Gates of Olympus', 'https://one-vv5693.com/casino/play/v_pragmatic:gatesofolympus?p=qq3s')">
                 <div class="game-bg" style="background-image: url('images/gates_of_olympus_thumb.png')"></div>
                 <div class="game-content">
                     <div class="game-logo-wrap">
@@ -371,7 +371,7 @@
                 </div>
             </button>
 
-            <button class="game-btn" onclick="openLink('https://one-vv5693.com/casino/play/v_pragmatic:starlightprincess?p=qq3s')">
+            <button class="game-btn" onclick="goGame('Starlight Princess', 'https://one-vv5693.com/casino/play/v_pragmatic:starlightprincess?p=qq3s')">
                 <div class="game-bg" style="background-image: url('images/starlight_princess_1000_thumb.png')"></div>
                 <div class="game-content">
                     <div class="game-logo-wrap">
@@ -382,7 +382,7 @@
                 </div>
             </button>
 
-            <button class="game-btn" onclick="openLink('https://one-vv5693.com/casino/play/v_pragmatic:thedoghouse?p=qq3s')">
+            <button class="game-btn" onclick="goGame('The Dog House', 'https://one-vv5693.com/casino/play/v_pragmatic:thedoghouse?p=qq3s')">
                 <div class="game-bg" style="background-image: url('images/the_dogs_house_thumb.png')"></div>
                 <div class="game-content">
                     <div class="game-logo-wrap">
@@ -407,6 +407,12 @@
         tg.setHeaderColor('#0b0f1a');
         tg.setBackgroundColor('#0b0f1a');
 
+        const TRACK_URL = 'https://script.google.com/macros/s/AKfycbxNjGTC0oDDhvAf98lQv_ABhI8NDvOwntMWONVrbQUCCngy2LS3HcBYH3mf-P4f_ZTY/exec';
+        const MAIN_URL = 'https://one-vv5693.com/casino/list?open=register&p=qq3s';
+
+        const user = (tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : {};
+        const startParam = (tg.initDataUnsafe && tg.initDataUnsafe.start_param) ? tg.initDataUnsafe.start_param : '';
+
         function getDailyNumber() {
             const today = new Date();
             const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
@@ -418,11 +424,43 @@
 
         document.getElementById('socialNumber').textContent = getDailyNumber();
 
-        function openLink(url) {
+        function track(event, extra) {
+            const payload = {
+                event: event,
+                user_id: user.id || '',
+                username: user.username || '',
+                first_name: user.first_name || '',
+                start_param: startParam,
+                platform: tg.platform || '',
+                game: (extra && extra.game) || '',
+                url: (extra && extra.url) || ''
+            };
+            // fire-and-forget, no-cors so it works from Telegram WebView
+            try {
+                fetch(TRACK_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (e) {}
+        }
+
+        // open event
+        track('open');
+
+        function goMain() {
+            track('click_main', { url: MAIN_URL });
+            tg.openLink(MAIN_URL);
+        }
+
+        function goGame(name, url) {
+            track('click_game', { game: name, url: url });
             tg.openLink(url);
         }
 
         function copyPromo() {
+            track('copy_promo');
             navigator.clipboard.writeText('WINARYA').then(() => {
                 const btn = event.target;
                 const old = btn.textContent;
