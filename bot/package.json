@@ -1,0 +1,14 @@
+{
+  "name": "winarya-miniapp-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Telegram bot entry for 1WIN Mini App preland",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "setup": "node setup.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
