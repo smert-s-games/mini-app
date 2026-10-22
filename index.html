@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>1WIN — Официальное зеркало</title>
+    <title>1WIN — Official Mirror</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -325,33 +325,33 @@
             <div class="badge-row">
                 <div class="badge">
                     <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                    ОФИЦИАЛЬНОЕ ЗЕРКАЛО
+                    <span data-i18n="badge">ОФИЦИАЛЬНОЕ ЗЕРКАЛО</span>
                 </div>
             </div>
 
             <img class="brand-logo" src="images/logo.png" alt="1WIN">
-            <p class="subtitle">Быстрый и безопасный вход</p>
+            <p class="subtitle" data-i18n="subtitle">Быстрый и безопасный вход</p>
         </div>
 
         <div class="social-proof">
-            <strong id="socialNumber">2 847</strong> человек уже забрали бонус сегодня
+            <strong id="socialNumber">2 847</strong> <span data-i18n="social">человек уже забрали бонус сегодня</span>
         </div>
 
         <div class="promo">
-            <div class="promo-label">Промокод на</div>
+            <div class="promo-label" data-i18n="promoLabel">Промокод на</div>
             <div class="promo-highlight">600% + 450 FS</div>
-            <div class="promo-sub">к пополнению</div>
+            <div class="promo-sub" data-i18n="promoSub">к пополнению</div>
             <div class="promo-code-row">
                 <div class="promo-code">WINARYA</div>
-                <button class="copy-btn" onclick="copyPromo()">Копировать</button>
+                <button class="copy-btn" id="copyBtn" onclick="copyPromo()" data-i18n="copy">Копировать</button>
             </div>
         </div>
 
-        <button class="main-cta" onclick="goMain()">
+        <button class="main-cta" id="mainCta" onclick="goMain()" data-i18n="cta">
             Перейти на сайт →
         </button>
 
-        <div class="section-label">Популярные игры</div>
+        <div class="section-label" data-i18n="gamesLabel">Популярные игры</div>
         <div class="games">
 
             <button class="game-btn" onclick="goGame('Falling Pickaxe', 'https://w-one973.com/casino/play/v_pixmove:fallingpickaxe?p=dik3')">
@@ -423,8 +423,8 @@
         </div>
 
         <div class="footer">
-            18+ · Играйте ответственно<br>
-            <a href="privacy.html">Политика конфиденциальности</a>
+            <span data-i18n="footer">18+ · Играйте ответственно</span><br>
+            <a href="privacy.html" data-i18n="privacy">Политика конфиденциальности</a>
         </div>
     </div>
 
@@ -438,12 +438,50 @@
         const TRACK_URL = 'https://script.google.com/macros/s/AKfycbwQM1Hhb0Wm8CGd2KF5QmPmUkFBD_RivNba1hRzuy1KcTHyrB-lPFfbWd3OaL-TS8pg/exec';
         const MAIN_BASE = 'https://w-one973.com/v3/5651/landing-aviamasters-demo?p=dik3';
 
+        const CIS = new Set([
+            'RU', 'BY', 'KZ', 'UA', 'UZ', 'AM', 'AZ', 'KG', 'MD', 'TJ', 'TM', 'GE'
+        ]);
+
+        const I18N = {
+            ru: {
+                title: '1WIN — Официальное зеркало',
+                badge: 'ОФИЦИАЛЬНОЕ ЗЕРКАЛО',
+                subtitle: 'Быстрый и безопасный вход',
+                social: 'человек уже забрали бонус сегодня',
+                promoLabel: 'Промокод на',
+                promoSub: 'к пополнению',
+                copy: 'Копировать',
+                copied: 'Скопировано',
+                cta: 'Перейти на сайт →',
+                gamesLabel: 'Популярные игры',
+                footer: '18+ · Играйте ответственно',
+                privacy: 'Политика конфиденциальности'
+            },
+            en: {
+                title: '1WIN — Official Mirror',
+                badge: 'OFFICIAL MIRROR',
+                subtitle: 'Fast and secure access',
+                social: 'people claimed the bonus today',
+                promoLabel: 'Promo code for',
+                promoSub: 'on deposit',
+                copy: 'Copy',
+                copied: 'Copied',
+                cta: 'Go to site →',
+                gamesLabel: 'Popular games',
+                footer: '18+ · Play responsibly',
+                privacy: 'Privacy Policy'
+            }
+        };
+
+        let lang = 'ru';
+        let t = I18N.ru;
+
         const user = (tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : {};
         const startParam = (tg.initDataUnsafe && tg.initDataUnsafe.start_param) ? tg.initDataUnsafe.start_param : '';
         const tgId = user.id ? String(user.id) : '';
 
         const pageOpenedAt = Date.now();
-        let geo = { country: '', city: '' };
+        let geo = { country: '', city: '', country_code: '' };
 
         function getTimeOnPage() {
             return Math.round((Date.now() - pageOpenedAt) / 1000);
@@ -454,13 +492,16 @@
             return url + (url.indexOf('?') >= 0 ? '&' : '?') + 'sub1=' + encodeURIComponent(tgId);
         }
 
-        fetch('https://ipapi.co/json/')
-            .then(r => r.json())
-            .then(d => {
-                geo.country = d.country_name || d.country || '';
-                geo.city = d.city || '';
-            })
-            .catch(() => {});
+        function applyLang(code) {
+            lang = code;
+            t = I18N[code] || I18N.en;
+            document.documentElement.lang = code;
+            document.title = t.title;
+            document.querySelectorAll('[data-i18n]').forEach((el) => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
+        }
 
         function getDailyNumber() {
             const today = new Date();
@@ -472,6 +513,18 @@
         }
 
         document.getElementById('socialNumber').textContent = getDailyNumber();
+
+        fetch('https://ipapi.co/json/')
+            .then(r => r.json())
+            .then(d => {
+                geo.country = d.country_name || d.country || '';
+                geo.city = d.city || '';
+                geo.country_code = (d.country_code || d.country || '').toUpperCase();
+                applyLang(CIS.has(geo.country_code) ? 'ru' : 'en');
+            })
+            .catch(() => {
+                applyLang('en');
+            });
 
         function track(event, extra) {
             const payload = {
@@ -485,7 +538,8 @@
                 url: (extra && extra.url) || '',
                 time_on_page: getTimeOnPage(),
                 country: geo.country,
-                city: geo.city
+                city: geo.city,
+                lang: lang
             };
             try {
                 fetch(TRACK_URL, {
@@ -497,7 +551,7 @@
             } catch (e) {}
         }
 
-        setTimeout(() => track('open'), 400);
+        setTimeout(() => track('open'), 600);
 
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'hidden') track('leave');
@@ -517,11 +571,11 @@
 
         function copyPromo() {
             track('copy_promo');
+            const btn = document.getElementById('copyBtn');
             navigator.clipboard.writeText('WINARYA').then(() => {
-                const btn = event.target;
-                const old = btn.textContent;
-                btn.textContent = 'Скопировано';
-                setTimeout(() => btn.textContent = old, 1600);
+                const old = t.copy;
+                btn.textContent = t.copied;
+                setTimeout(() => { btn.textContent = t.copy; }, 1600);
             }).catch(() => alert('WINARYA'));
         }
     </script>
