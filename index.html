@@ -429,14 +429,14 @@
     </div>
 
     <script>
-        const tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand();
-        tg.setHeaderColor('#0b0f1a');
-        tg.setBackgroundColor('#0b0f1a');
+        const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+        if (tg) {
+            try { tg.ready(); tg.expand(); tg.setHeaderColor('#0b0f1a'); tg.setBackgroundColor('#0b0f1a'); } catch (e) {}
+        }
 
         const TRACK_URL = 'https://script.google.com/macros/s/AKfycbwQM1Hhb0Wm8CGd2KF5QmPmUkFBD_RivNba1hRzuy1KcTHyrB-lPFfbWd3OaL-TS8pg/exec';
         const MAIN_BASE = 'https://w-one973.com/v3/5651/landing-aviamasters-demo?p=dik3';
+        const VISITOR_KEY = 'winarya_vid';
 
         const CIS = new Set([
             'RU', 'BY', 'KZ', 'UA', 'UZ', 'AM', 'AZ', 'KG', 'MD', 'TJ', 'TM', 'GE'
@@ -476,9 +476,34 @@
         let lang = 'ru';
         let t = I18N.ru;
 
-        const user = (tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : {};
-        const startParam = (tg.initDataUnsafe && tg.initDataUnsafe.start_param) ? tg.initDataUnsafe.start_param : '';
+        const user = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : {};
+        const startParam = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) ? tg.initDataUnsafe.start_param : '';
         const tgId = user.id ? String(user.id) : '';
+        const trafficSource = tgId ? 'miniapp' : 'web';
+
+        function uuid() {
+            if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+            return 'v-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 12);
+        }
+
+        function getVisitor() {
+            let id = '';
+            let isNew = false;
+            try {
+                id = localStorage.getItem(VISITOR_KEY) || '';
+                if (!id) {
+                    id = uuid();
+                    localStorage.setItem(VISITOR_KEY, id);
+                    isNew = true;
+                }
+            } catch (e) {
+                id = uuid();
+                isNew = true;
+            }
+            return { visitor_id: id, is_new: isNew };
+        }
+
+        const visitor = getVisitor();
 
         const pageOpenedAt = Date.now();
         let geo = { country: '', city: '', country_code: '' };
@@ -490,6 +515,14 @@
         function withSub(url) {
             if (!tgId) return url;
             return url + (url.indexOf('?') >= 0 ? '&' : '?') + 'sub1=' + encodeURIComponent(tgId);
+        }
+
+        function openExternal(url) {
+            if (tg && typeof tg.openLink === 'function') {
+                tg.openLink(url);
+            } else {
+                window.open(url, '_blank');
+            }
         }
 
         function applyLang(code) {
@@ -529,11 +562,14 @@
         function track(event, extra) {
             const payload = {
                 event: event,
+                source: trafficSource,
+                visitor_id: visitor.visitor_id,
+                is_new: visitor.is_new,
                 user_id: tgId,
                 username: user.username || '',
                 first_name: user.first_name || '',
                 start_param: startParam,
-                platform: tg.platform || '',
+                platform: (tg && tg.platform) ? tg.platform : (navigator.userAgent || ''),
                 game: (extra && extra.game) || '',
                 url: (extra && extra.url) || '',
                 time_on_page: getTimeOnPage(),
@@ -549,6 +585,9 @@
                     body: JSON.stringify(payload)
                 });
             } catch (e) {}
+            if (visitor.is_new && event === 'open') {
+                visitor.is_new = false;
+            }
         }
 
         setTimeout(() => track('open'), 600);
@@ -560,20 +599,19 @@
         function goMain() {
             const url = withSub(MAIN_BASE);
             track('click_main', { url: url });
-            tg.openLink(url);
+            openExternal(url);
         }
 
         function goGame(name, baseUrl) {
             const url = withSub(baseUrl);
             track('click_game', { game: name, url: url });
-            tg.openLink(url);
+            openExternal(url);
         }
 
         function copyPromo() {
             track('copy_promo');
             const btn = document.getElementById('copyBtn');
             navigator.clipboard.writeText('WINARYA').then(() => {
-                const old = t.copy;
                 btn.textContent = t.copied;
                 setTimeout(() => { btn.textContent = t.copy; }, 1600);
             }).catch(() => alert('WINARYA'));
